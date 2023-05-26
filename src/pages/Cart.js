@@ -144,7 +144,9 @@ const Cart = () => {
       </Box>
       <p>Total Amount: {totalAmount}</p>
       <p>Total Price: {totalPrice}</p>
-      <button onClick={handleSubmit}>Submit</button>
+      <Box as="button" onClick={handleSubmit} width={189}>
+        Submit
+      </Box>
     </Box>
   );
 };
