@@ -1,5 +1,5 @@
 import { lazy } from 'react';
-
+import { CartProvider } from '../CartContext';
 import { Toaster } from 'react-hot-toast';
 import { Route, Routes, Navigate } from 'react-router-dom';
 import { GlobalStyle } from './GlobalStyle';
@@ -21,21 +21,23 @@ export const App = () => {
 
   return (
     <>
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<Navigate to="shop" />} />
+      <CartProvider>
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<Navigate to="shop" />} />
 
-          <Route path="shop" element={<Shop />}>
-            {shops.map(({ text, href }) => (
-              <Route key={text} path={href} element={<Products />} />
-            ))}
+            <Route path="shop" element={<Shop />}>
+              {shops.map(({ text, href }) => (
+                <Route key={text} path={href} element={<Products />} />
+              ))}
+            </Route>
+
+            <Route path="shoping_cart" element={<Cart />} />
           </Route>
-
-          <Route path="shoping_cart" element={<Cart />} />
-        </Route>
-      </Routes>
-      <GlobalStyle />
-      <Toaster position="top-right" reverseOrder={false} />
+        </Routes>
+        <GlobalStyle />
+        <Toaster position="top-right" reverseOrder={false} />
+      </CartProvider>
     </>
   );
 };

@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
 import { Box } from './Box';
 import { useLocation } from 'react-router-dom';
 import { getProducts } from 'fakeApi';
-
+import { CartContext } from '../CartContext';
 const Item = styled.li`
   padding: ${p => p.theme.space[4]}px;
   text-decoration: none;
@@ -30,6 +30,7 @@ const Products = () => {
   const [products, setProducts] = useState([]);
   const location = useLocation();
   const href = location.pathname.slice(6);
+  const { addToCart } = useContext(CartContext);
 
   useEffect(() => {
     getProducts().then(setProducts);
@@ -38,9 +39,19 @@ const Products = () => {
   const visibleProducts = products.filter(product =>
     product.shop.toLowerCase().includes(href)
   );
+  const handleAddToCart = (name, price, shop, id) => {
+    const product = {
+      name: name,
+      price: price,
+      shop: shop,
+      id: id,
+    };
+    addToCart(product);
+  };
   if (!href) {
     return null;
   }
+
   return (
     <Box as="section" display="flex">
       <Box
@@ -53,11 +64,13 @@ const Products = () => {
         // py={20}
         // border="1px solid black"
       >
-        {visibleProducts.map(({ price, name, id }) => (
+        {visibleProducts.map(({ price, name, id, shop }) => (
           <Item key={id}>
             <h3>{name}</h3>
             <p>Price: {price}</p>
-            <button>Add</button>
+            <button onClick={() => handleAddToCart(name, price, shop, id)}>
+              Add
+            </button>
           </Item>
         ))}
       </Box>
