@@ -3,11 +3,10 @@ import { CartProvider } from '../CartContext';
 import { Toaster } from 'react-hot-toast';
 import { Route, Routes, Navigate } from 'react-router-dom';
 import { GlobalStyle } from './GlobalStyle';
-
 import { Layout } from './Layout';
 import { useState, useEffect } from 'react';
-import { getShops } from 'fakeApi';
 import Cart from 'pages/Cart';
+import { getShops } from 'services/Api';
 const Shop = lazy(() => import('../pages/Shop'));
 
 const Products = lazy(() => import('./Products'));

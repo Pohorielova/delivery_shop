@@ -2,8 +2,9 @@ import { useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
 import { Box } from './Box';
 import { useLocation } from 'react-router-dom';
-import { getProducts } from 'fakeApi';
+// import { getProducts } from 'fakeApi';
 import { CartContext } from '../CartContext';
+import { getProducts } from 'services/Api';
 const Item = styled.li`
   padding: ${p => p.theme.space[4]}px;
   text-decoration: none;

@@ -3,6 +3,7 @@ import { Box } from 'components/Box';
 
 import React, { useState, useContext } from 'react';
 import { CartContext } from '../CartContext';
+import { createOrder } from 'services/Api';
 const Item = styled.li`
   padding: ${p => p.theme.space[4]}px;
   text-decoration: none;
@@ -57,7 +58,15 @@ const Cart = () => {
       ...formData,
       cartItems: cartItems,
     };
+    createOrder(JSON.stringify(orderData));
     console.log('Order Data:', orderData);
+    setFormData({
+      address: '',
+      phoneNumber: '',
+      name: '',
+      email: '',
+    });
+    setCartItems([]);
   };
 
   const totalAmount = cartItems.reduce(

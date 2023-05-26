@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Box } from 'components/Box';
 import { Suspense } from 'react';
 import { useState, useEffect } from 'react';
-import { getShops } from 'fakeApi';
+import { getShops } from 'services/Api';
 
 const NavItem = styled(NavLink)`
   padding: ${p => p.theme.space[2]}px;

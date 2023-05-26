@@ -5,7 +5,6 @@ import { Box } from './Box';
 
 const navItems = [
   { href: 'shop', text: 'Shop', icon: BsWalletFill },
-
   { href: 'shoping_cart', text: 'Shoping Cart', icon: BsPersonLinesFill },
 ];
 
