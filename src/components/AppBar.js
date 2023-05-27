@@ -15,6 +15,7 @@ const NavItem = styled(NavLink)`
   padding: ${p => p.theme.space[3]}px;
   border-radius: 4px;
   text-decoration: none;
+  font-weight: ${p => p.theme.fontWeights.bold};
   color: ${p => p.theme.colors.text};
 
   &.active {
@@ -31,7 +32,7 @@ const NavItem = styled(NavLink)`
 export const AppBar = () => {
   return (
     <Box as="header" p={4}>
-      <Box as="nav" display="flex">
+      <Box as="nav" display="flex" gridGap={15}>
         {navItems.map(({ href, text, icon: Icon }) => (
           <NavItem to={href} key={href}>
             <Icon size="16" />

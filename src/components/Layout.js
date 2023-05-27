@@ -5,7 +5,7 @@ import { Box } from './Box';
 
 export const Layout = () => {
   return (
-    <Box display="grid">
+    <Box display="grid" p={15}>
       <AppBar />
       <Suspense fallback={null}>
         <Outlet />

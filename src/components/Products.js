@@ -2,9 +2,10 @@ import { useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
 import { Box } from './Box';
 import { useLocation } from 'react-router-dom';
-// import { getProducts } from 'fakeApi';
 import { CartContext } from '../CartContext';
 import { getProducts } from 'services/Api';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const Item = styled.li`
   padding: ${p => p.theme.space[4]}px;
   text-decoration: none;
@@ -14,19 +15,26 @@ const Item = styled.li`
   flex-direction: column;
   min-width: 150px;
   gap: 15px;
-
-  border: 1px solid;
-  border-color: ${p => p.theme.colors.primary};
-  &.active {
-    background-color: ${p => p.theme.colors.primary};
-    color: ${p => p.theme.colors.white};
+  background-color: ${p => p.theme.colors.muted};
+  transition: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  &:hover {
+    transform: scale(1.06);
   }
-
-  :hover:not(.active) {
+`;
+const Btn = styled.button`
+  background-color: ${p => p.theme.colors.primary};
+  border: none;
+  border-radius: 4px;
+  padding: ${p => p.theme.space[2]}px;
+  color: ${p => p.theme.colors.white};
+  font-weight: ${p => p.theme.fontWeights.bold};
+  cursor: pointer;
+  transition: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  :hover {
+    background-color: ${p => p.theme.colors.background};
     color: ${p => p.theme.colors.primary};
   }
 `;
-
 const Products = () => {
   const [products, setProducts] = useState([]);
   const location = useLocation();
@@ -48,6 +56,7 @@ const Products = () => {
       id: id,
     };
     addToCart(product);
+    toast(`🦄 Product ${name} from ${shop} added successfully!`);
   };
   if (!href) {
     return null;
@@ -55,26 +64,18 @@ const Products = () => {
 
   return (
     <Box as="section" display="flex">
-      <Box
-        as="ul"
-        display="flex"
-        flexWrap="wrap"
-        // flexDirection="column"
-        gridGap={20}
-        padding={20}
-        // py={20}
-        // border="1px solid black"
-      >
+      <Box as="ul" display="flex" flexWrap="wrap" gridGap={20} padding={20}>
         {visibleProducts.map(({ price, name, id, shop }) => (
           <Item key={id}>
             <h3>{name}</h3>
             <p>Price: {price}</p>
-            <button onClick={() => handleAddToCart(name, price, shop, id)}>
+            <Btn onClick={() => handleAddToCart(name, price, shop, id)}>
               Add
-            </button>
+            </Btn>
           </Item>
         ))}
       </Box>
+      <ToastContainer />
     </Box>
   );
 };

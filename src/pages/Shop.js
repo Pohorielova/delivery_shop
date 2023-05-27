@@ -9,7 +9,8 @@ const NavItem = styled(NavLink)`
   padding: ${p => p.theme.space[2]}px;
   color: ${p => p.theme.colors.text};
   text-decoration: none;
-
+  border-radius: 4px;
+  background-color: ${p => p.theme.colors.muted};
   &.active {
     color: ${p => p.theme.colors.primary};
   }
@@ -25,10 +26,10 @@ const Shop = () => {
   return (
     <Box as="main" display="grid" gridTemplateColumns="200px 1fr">
       <Box as="header" p={4}>
-        <Box as="ul" display="flex" flexDirection="column">
+        <Box as="ul" display="flex" flexDirection="column" gridGap={15}>
           {shops.map(({ href, text }) => (
             <NavItem key={text} to={`${href}`}>
-              <h3>{text}</h3>
+              <p>{text}</p>
             </NavItem>
           ))}
         </Box>

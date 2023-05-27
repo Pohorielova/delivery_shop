@@ -1,30 +1,11 @@
-import styled from 'styled-components';
 import { Box } from 'components/Box';
 
 import React, { useState, useContext } from 'react';
 import { CartContext } from '../CartContext';
 import { createOrder } from 'services/Api';
-const Item = styled.li`
-  padding: ${p => p.theme.space[4]}px;
-  text-decoration: none;
-  color: ${p => p.theme.colors.text};
-  border-radius: 8px;
-  display: flex;
-  flex-direction: column;
-  width: 200px;
-  gap: 5px;
-
-  border: 1px solid;
-  border-color: ${p => p.theme.colors.primary};
-  &.active {
-    background-color: ${p => p.theme.colors.primary};
-    color: ${p => p.theme.colors.white};
-  }
-
-  :hover:not(.active) {
-    color: ${p => p.theme.colors.primary};
-  }
-`;
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { Btn, BtnDel, Item } from './Cart.styled';
 
 const Cart = () => {
   const { cartItems, removeFromCart, setCartItems } = useContext(CartContext);
@@ -37,6 +18,7 @@ const Cart = () => {
 
   const handleRemoveItem = index => {
     removeFromCart(index);
+    toast('🦄 Removed successfully!');
   };
 
   const handleInputChange = e => {
@@ -59,7 +41,8 @@ const Cart = () => {
       cartItems: cartItems,
     };
     createOrder(JSON.stringify(orderData));
-    console.log('Order Data:', orderData);
+    console.log(orderData);
+    toast('🦄 Order saved successfully!');
     setFormData({
       address: '',
       phoneNumber: '',
@@ -137,16 +120,15 @@ const Cart = () => {
                 value={item.quantity}
                 onChange={e => handleQuantityChange(index, e)}
               />
-              <button onClick={() => handleRemoveItem(index)}>Remove</button>
+              <BtnDel onClick={() => handleRemoveItem(index)}>Remove</BtnDel>
             </Item>
           ))}
         </Box>
       </Box>
       <p>Total Amount: {totalAmount}</p>
       <p>Total Price: {totalPrice}</p>
-      <Box as="button" onClick={handleSubmit} width={189}>
-        Submit
-      </Box>
+      <Btn onClick={handleSubmit}>Submit</Btn>
+      <ToastContainer />
     </Box>
   );
 };
